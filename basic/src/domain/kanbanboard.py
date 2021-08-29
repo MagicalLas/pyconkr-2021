@@ -1,7 +1,9 @@
+import abc
 import dataclasses
-from enum import Enum, auto
+from typing import Optional, List
 
 from src.domain.backlog import BackLog
+from src.domain.card import Card
 from src.domain.line import Line
 
 
@@ -27,3 +29,30 @@ class KanbanBoard(object):
         self._done_cards = done_cards
         self._backlog = backlog
 
+
+class KanbanBoardRepository(object):
+    @abc.abstractmethod
+    def get_all(self) -> List[KanbanBoard]:
+        pass
+
+    @abc.abstractmethod
+    def get_by_id(self, board_id: BoardID) -> Optional[KanbanBoard]:
+        pass
+
+    @abc.abstractmethod
+    def save(self, board: KanbanBoard) -> KanbanBoard:
+        pass
+
+    @abc.abstractmethod
+    def delete(self, board: KanbanBoard) -> None:
+        pass
+
+
+class NotificationService(object):
+    @abc.abstractmethod
+    def card_done_alert(self, card: Card) -> None:
+        pass
+
+    @abc.abstractmethod
+    def wip_limit_alert(self, board: KanbanBoard) -> None:
+        pass

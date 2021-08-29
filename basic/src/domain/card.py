@@ -6,6 +6,7 @@ from enum import Enum, auto
 
 from pydantic import BaseModel
 
+
 class CardStatus(Enum):
     TODO = auto()
     DONE = auto()
